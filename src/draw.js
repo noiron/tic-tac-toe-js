@@ -41,7 +41,7 @@ export function drawGrid(ctx, cols, rows, gridSize = GRID_SIZE, strokeStyle = '#
 }
 
 
-export const canvas = document.getElementById('main');
+export const canvas = document.getElementById('board');
 export const ctx = canvas.getContext('2d');
 export function initCanvas() {
     canvas.width = 450;

@@ -49,6 +49,8 @@ function checkWinner() {
     const winner = gameState.checkFinish();
     if (winner) {
         console.log('游戏结束', winner);
+        const winnerEle = document.getElementById('winner');
+        winnerEle.innerHTML = winner === 'draw' ? 'Draw' : 'Winner is: ' + winner;
         gameState.winner = winner;
     }
 }
