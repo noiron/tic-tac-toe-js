@@ -1,7 +1,15 @@
-#main {
-    margin-top: 50px;
-    margin-left: 50px;
+#container {
+    padding: 50px;
+}
+
+#board {
     width: 450px;
     height: 450px;
     border: 2px solid;
+}
+
+#winner {
+    width: 450px;
+    font-size: 30px;
+    text-align: center;
 }

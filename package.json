@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "node server.js",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --out-dir build --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,8 +21,11 @@
   "bugs": {
     "url": "https://github.com/noiron/tic-tac-toe-js/issues"
   },
-  "homepage": "https://github.com/noiron/tic-tac-toe-js#readme",
+  "homepage": "https://tic-tac-toe-js-app.herokuapp.com/",
   "devDependencies": {
     "parcel-bundler": "^1.6.1"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
   }
 }
