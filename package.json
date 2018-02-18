@@ -1,0 +1,26 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noiron/tic-tac-toe-js.git"
+  },
+  "keywords": [
+    "tic-tac-toe"
+  ],
+  "author": "Wu Kai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noiron/tic-tac-toe-js/issues"
+  },
+  "homepage": "https://github.com/noiron/tic-tac-toe-js#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.6.1"
+  }
+}
