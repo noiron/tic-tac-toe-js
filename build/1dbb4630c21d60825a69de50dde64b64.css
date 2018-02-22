@@ -1,1 +1,1 @@
-#container{padding:50px}#board{width:450px;height:450px;border:2px solid}#winner{width:450px;font-size:30px;text-align:center}
+*{text-align:center}#container{padding:20px 50px}button{min-width:100px;min-height:30px}#board{width:450px;height:450px;border:2px solid}#winner{width:100%;font-size:30px;text-align:center}button#restart-game{margin-top:20px}
