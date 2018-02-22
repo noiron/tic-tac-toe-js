@@ -1,7 +1,7 @@
+import { getAiToken } from './main';
+
 export const X = 'X';
 export const O = 'O';
-
-const aiToken = X;
 
 let counter = 0;
 
@@ -10,9 +10,6 @@ export class GameState {
         this.board = _.clone(board) || _.fill(Array(9), null);
         this.playerTurn = player;   // 当前轮到谁下子
         this.minimax = -100;
-
-        this.availablePos = [];
-        this.possiableChildState = [];
 
         this.choosenState = null;
         this.winner = false;
@@ -58,8 +55,7 @@ export class GameState {
         if (board[2] && board[2] === board[4] && board[2] === board[6]) return board[2];
 
         // 如果无可下子位置则为平局，否则游戏未结束
-        const availablePos = this.getAvailablePos();
-        if (availablePos.length === 0) return 'draw';
+        if (_.compact(board).length === 9) return 'draw';        
         else return false;
     }
 
@@ -73,7 +69,8 @@ export class GameState {
         availablePos.forEach(pos => {
             const board = _.clone(this.board);
             board[pos] = this.playerTurn;
-            nextStates.push(new GameState(board, changeTurn(this.playerTurn)));
+            const nextTurn = changeTurn(this.playerTurn);
+            nextStates.push(new GameState(board, nextTurn));
         });
         return nextStates;
     }
@@ -82,13 +79,13 @@ export class GameState {
      * 
     */
     getMinimax() {
+        const aiToken = getAiToken();
+
         // console.log(counter++);
         const winner = this.checkFinish();
         if (winner) {
             if (winner === 'draw') return 0;
-            if (winner === aiToken) {
-                return 10;
-            }
+            if (winner === aiToken) return 10;
             return -10;
         }
 
@@ -101,8 +98,8 @@ export class GameState {
 
         let rank;
 
-        // 轮到自己，选取最大值
         if (this.playerTurn === aiToken) {
+            // 轮到自己，选取最大值
             rank = Math.max(...nextMinimax);
         } else {
             rank = Math.min(...nextMinimax);

@@ -1,10 +1,11 @@
 import { GameState, X, O } from './ai';
 import { canvas, ctx, initCanvas, draw, px2Index } from './draw';
 
-// const TestBoard = [O, X, O, O, X, X, null, null, null];
-const TestBoard = _.fill(Array(9), null);
+let aiToken = O;
+let gameState = new GameState(TestBoard, aiToken);
 
-const gameState = new GameState(TestBoard, X);
+// const TestBoard = [null, X, null, null, null, X, O, O, X];
+const TestBoard = _.fill(Array(9), null);
 
 canvas.addEventListener('click', handleClick, false);
 function handleClick(e) {
@@ -28,7 +29,7 @@ function humanMove(row, col) {
     if (gameState.winner) return;
 
     const board = _.clone(gameState.board);
-    board[index] = O;
+    board[index] = aiToken === X ? O : X;
     gameState.board = _.clone(board);
     draw(gameState.board);
     checkWinner();
@@ -55,6 +56,32 @@ function checkWinner() {
     }
 }
 
-initCanvas();
-draw(gameState.board);
-aiMove();
+
+function chooseToken(e) {
+    const token = e.target.dataset.token;
+    aiToken = token === X ? O : X;
+    gameState = new GameState(TestBoard, aiToken);
+    draw(gameState.board);
+
+    if (token === O) {
+        setTimeout(aiMove, 0);
+    }
+}
+
+export function getAiToken() {
+    return aiToken;
+}
+
+function initGame() {
+    initCanvas();
+    draw(gameState.board);
+
+    const chooseTokenO = document.getElementById('btn-choose-o');
+    const chooseTokenX = document.getElementById('btn-choose-x');
+    chooseTokenO.addEventListener('click', chooseToken);
+    chooseTokenX.addEventListener('click', chooseToken);
+}
+
+
+
+initGame();
