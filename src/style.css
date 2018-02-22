@@ -1,5 +1,14 @@
+* {
+    text-align: center;
+}
+
 #container {
-    padding: 50px;
+    padding: 20px 50px;
+}
+
+button {
+    min-width: 100px;
+    min-height: 30px;
 }
 
 #board {
@@ -9,7 +18,11 @@
 }
 
 #winner {
-    width: 450px;
+    width: 100%;
     font-size: 30px;
     text-align: center;
+}
+
+button#restart-game {
+    margin-top: 20px;
 }

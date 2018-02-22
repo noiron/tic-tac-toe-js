@@ -2,10 +2,10 @@ import { GameState, X, O } from './ai';
 import { canvas, ctx, initCanvas, draw, px2Index } from './draw';
 
 let aiToken = O;
-let gameState = new GameState(TestBoard, aiToken);
+let gameState = new GameState(EmptyBoard, aiToken);
 
 // const TestBoard = [null, X, null, null, null, X, O, O, X];
-const TestBoard = _.fill(Array(9), null);
+const EmptyBoard = _.fill(Array(9), null);
 
 canvas.addEventListener('click', handleClick, false);
 function handleClick(e) {
@@ -60,26 +60,45 @@ function checkWinner() {
 function chooseToken(e) {
     const token = e.target.dataset.token;
     aiToken = token === X ? O : X;
-    gameState = new GameState(TestBoard, aiToken);
-    draw(gameState.board);
 
     if (token === O) {
+        gameState = new GameState(EmptyBoard, aiToken);
+        displayChoice(token);
         setTimeout(aiMove, 0);
     }
+}
+
+function displayChoice(choice) {
+    const showChoice = document.getElementById('show-choice');
+    showChoice.innerHTML = 'Your choice: ' + choice;
 }
 
 export function getAiToken() {
     return aiToken;
 }
 
+function restartGame() {
+    aiToken = O;
+    displayChoice(aiToken === X ? O : X);
+    gameState = new GameState(EmptyBoard, aiToken);
+    draw(gameState.board);
+
+    const winnerEle = document.getElementById('winner');
+    winnerEle.innerHTML = '';
+}
+
 function initGame() {
     initCanvas();
+    gameState = new GameState(EmptyBoard, aiToken);
     draw(gameState.board);
 
     const chooseTokenO = document.getElementById('btn-choose-o');
     const chooseTokenX = document.getElementById('btn-choose-x');
     chooseTokenO.addEventListener('click', chooseToken);
     chooseTokenX.addEventListener('click', chooseToken);
+
+    const restartEle = document.getElementById('restart-game');
+    restartEle.addEventListener('click', restartGame);
 }
 
 
