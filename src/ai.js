@@ -4,15 +4,18 @@ export const X = 'X';
 export const O = 'O';
 
 let counter = 0;
+let maxDepth = 0;
+const LimitedDepth = 100; // 对搜索深度的限制
 
 export class GameState {
-    constructor(board, player) {
+    constructor(board, player, depth) {
         this.board = _.clone(board) || _.fill(Array(9), null);
         this.playerTurn = player;   // 当前轮到谁下子
         this.minimax = -100;
 
         this.choosenState = null;
         this.winner = false;
+        this.depth = depth || 0;
     }
 
     /** 
@@ -70,7 +73,7 @@ export class GameState {
             const board = _.clone(this.board);
             board[pos] = this.playerTurn;
             const nextTurn = changeTurn(this.playerTurn);
-            nextStates.push(new GameState(board, nextTurn));
+            nextStates.push(new GameState(board, nextTurn, this.depth + 1));
         });
         return nextStates;
     }
@@ -81,12 +84,19 @@ export class GameState {
     getMinimax() {
         const aiToken = getAiToken();
 
-        // console.log(counter++);
+        // console.log(counter++, this.depth);
+
         const winner = this.checkFinish();
         if (winner) {
             if (winner === 'draw') return 0;
             if (winner === aiToken) return 10;
             return -10;
+        }
+
+        // 限制搜索深度
+        // TODO: 现在超过搜索深度时，均返回分数0
+        if (this.depth >= LimitedDepth) {
+            return 0;
         }
 
         // 游戏尚未结束，根据下一状态来选择
