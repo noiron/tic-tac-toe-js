@@ -1,4 +1,5 @@
-import { GameState } from './minimax';
+// import { GameState } from './minimax-new';
+import { GameState } from './alphabeta';
 import { canvas, ctx, initCanvas, draw, px2Index } from './draw';
 
 export const X = 'X';
@@ -43,7 +44,7 @@ function humanMove(row, col) {
 
 function aiMove() {
     if (gameState.winner) return;    
-    gameState.getMinimax();
+    gameState.getScore();
     gameState.nextMove();
     draw(gameState.board);
     checkWinner();
@@ -92,7 +93,7 @@ function restartGame() {
 
 function initGame() {
     initCanvas();
-    gameState = new GameState(EmptyBoard, aiToken);
+    gameState = new GameState(EmptyBoard, aiToken, 0);
     draw(gameState.board);
 
     const chooseTokenO = document.getElementById('btn-choose-o');

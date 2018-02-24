@@ -3,21 +3,26 @@ import { getAiToken, X, O } from './main';
 let counter = 0;
 
 export class GameState {
-    constructor(board, player, depth) {
+    constructor(board, player, depth, alpha, beta) {
         this.board = board;
         this.playerTurn = player;
         this.depth = depth;
 
         this.choosenState = null;
         this.winner = false;
+
+        this.alpha = alpha || -Infinity;
+        this.beta = beta || Infinity;
+
+        this.counter = 0;
     }
 
     getScore() {
+        const aiToken = getAiToken();
+
         // if (counter++ % 100 === 0) {
         //     console.log(counter - 1);
         // }
-
-        const aiToken = getAiToken();
 
         const winner = this.checkFinish();
         if (winner) {
@@ -26,12 +31,12 @@ export class GameState {
             return -10;
         }
 
-        // 到达了最大深度
-        if (this.depth >= 1000) {
-            return this.board;
+        // 到达了最大深度后
+        if (this.depth >= 100) {
+            return 0;
         }
 
-        // 获得所有可能的位置
+        // 获得所有可能的位置，利用 shuffle 加入随机性
         const availablePos = _.shuffle(this.getAvailablePos());
 
         // 对于 max 节点，返回的是子节点中的最大值
@@ -43,13 +48,18 @@ export class GameState {
                 const pos = availablePos[i];
                 const newBoard = this.generateNewBoard(pos, this.playerTurn);
 
-                const childState = new GameState(newBoard, changeTurn(this.playerTurn), this.depth + 1);
+                const childState = new GameState(newBoard, changeTurn(this.playerTurn), this.depth + 1, this.alpha, this.beta);
                 const childScore = childState.getScore();
 
                 if (childScore > maxScore) {
                     maxScore = childScore;
                     maxIndex = i;
                     this.choosenState = childState;
+                    this.alpha = maxScore;
+                }
+
+                if (this.alpha >= this.beta) {
+                    break;
                 }
             }
 
@@ -63,13 +73,18 @@ export class GameState {
                 const pos = availablePos[i];
                 const newBoard = this.generateNewBoard(pos, this.playerTurn);
 
-                const childState = new GameState(newBoard, changeTurn(this.playerTurn), this.depth + 1);
+                const childState = new GameState(newBoard, changeTurn(this.playerTurn), this.depth + 1, this.alpha, this.beta);
                 const childScore = childState.getScore();
 
                 if (childScore < minScore) {
                     minScore = childScore;
                     minIndex = i;
                     this.choosenState = childState;
+                    this.beta = minScore;
+                }
+
+                if (this.alpha >= this.beta) {
+                    break;
                 }
             }
             return minScore;
