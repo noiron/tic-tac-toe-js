@@ -1,7 +1,4 @@
-import { getAiToken } from './main';
-
-export const X = 'X';
-export const O = 'O';
+import { getAiToken, X, O } from './main';
 
 let counter = 0;
 let maxDepth = 0;

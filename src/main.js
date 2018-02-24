@@ -1,5 +1,8 @@
-import { GameState, X, O } from './ai';
+import { GameState } from './minimax';
 import { canvas, ctx, initCanvas, draw, px2Index } from './draw';
+
+export const X = 'X';
+export const O = 'O';
 
 let aiToken = O;
 let gameState = new GameState(EmptyBoard, aiToken);
