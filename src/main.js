@@ -1,5 +1,5 @@
 // import { GameState } from './minimax-new';
-import { GameState } from './alphabeta';
+import { GameState } from './alphabeta';    // 将此行替换为上一行的注释，则为使用 minimax 算法
 import { canvas, ctx, initCanvas, draw, px2Index } from './draw';
 
 export const X = 'X';
