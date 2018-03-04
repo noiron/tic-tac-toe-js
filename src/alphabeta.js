@@ -31,7 +31,7 @@ export class GameState {
             return -10;
         }
 
-        // 到达了最大深度后
+        // 到达了最大深度后的相应处理，这里未限制深度
         if (this.depth >= 100) {
             return 0;
         }
