@@ -10,3 +10,5 @@ https://tic-tac-toe-js-app.herokuapp.com/
     npm i
     npm run dev
     // open http://localhost:1234
+
+![screenshot](/screenshot/game.png)
